@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servicios — Ramón Benavides</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #0F2A4A;
+    --navy2:  #1a3a5c;
+    --teal:   #0E9E82;
+    --teal2:  #0bc49f;
+    --teal-lt:#E1F5EE;
+    --gray:   #64748B;
+    --gray-lt:#F4F7FA;
+    --white:  #ffffff;
+    --text:   #1a2b3c;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ─────────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(15,42,74,0.97);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 60px;
+    border-bottom: 1px solid rgba(14,158,130,0.25);
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    color: var(--white);
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--teal); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal2); }
+  .nav-cta {
+    background: var(--teal);
+    color: var(--white) !important;
+    padding: 0.45rem 1.1rem;
+    border-radius: 6px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--teal2) !important; color: var(--white) !important; }
+
+  /* ── HERO ────────────────────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex; align-items: center;
+    padding: 100px 5vw 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 50%, rgba(14,158,130,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 10% 80%, rgba(14,158,130,0.07) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: relative;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(14,158,130,0.15);
+    border: 1px solid rgba(14,158,130,0.3);
+    border-radius: 100px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--teal2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--teal2);
+    border-radius: 50%;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--teal2);
+  }
+  .hero-sub {
+    color: rgba(255,255,255,0.65);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--teal);
+    color: var(--white);
+    padding: 0.85rem 1.8rem;
+    border-radius: 8px;
+    font-weight: 600; font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--teal2); transform: translateY(-1px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    padding: 0.85rem 1.8rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    font-weight: 500; font-size: 0.95rem;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal2); }
+
+  /* hero right — stat cards */
+  .hero-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .stat-card:hover { border-color: rgba(14,158,130,0.4); }
+  .stat-card:first-child { grid-column: span 2; background: rgba(14,158,130,0.1); border-color: rgba(14,158,130,0.25); }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    color: var(--teal2);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.55);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* ── SECTION SHARED ──────────────────────────────────────── */
+  section { padding: 90px 5vw; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    color: var(--gray);
+    font-size: 1rem;
+    line-height: 1.75;
+    max-width: 580px;
+    font-weight: 300;
+  }
+
+  /* ── SERVICES ────────────────────────────────────────────── */
+  #servicios { background: var(--gray-lt); }
+  .services-header { margin-bottom: 3rem; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+    gap: 1.5rem;
+  }
+  .service-card {
+    background: var(--white);
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.25s, transform 0.2s;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--teal);
+  }
+  .service-card:hover {
+    box-shadow: 0 12px 40px rgba(15,42,74,0.1);
+    transform: translateY(-3px);
+  }
+  .card-top {
+    display: flex; align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .card-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--teal);
+    line-height: 1;
+    opacity: 0.35;
+  }
+  .card-badge {
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+    background: var(--teal-lt);
+    color: var(--teal);
+  }
+  .card-price {
+    display: inline-block;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 0.8rem; font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+  }
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+    line-height: 1.25;
+  }
+  .card-hook {
+    font-size: 0.88rem;
+    color: var(--teal);
+    font-style: italic;
+    margin-bottom: 0.9rem;
+    font-weight: 400;
+  }
+  .card-desc {
+    font-size: 0.9rem;
+    color: var(--gray);
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+  .card-delivers {
+    font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 0.6rem;
+  }
+  .card-items { list-style: none; }
+  .card-items li {
+    font-size: 0.875rem;
+    color: var(--navy);
+    padding: 0.45rem 0;
+    border-top: 1px solid #f1f5f9;
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    font-weight: 400;
+  }
+  .card-items li::before {
+    content: '';
+    width: 6px; height: 6px; min-width: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+    margin-top: 6px;
+  }
+
+  /* retainer mini section inside card 02 */
+  .retainer-block {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #f1f5f9;
+  }
+  .retainer-block-label {
+    font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 0.75rem;
+  }
+  .retainer-tiers {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;
+  }
+  .retainer-tier {
+    background: var(--teal-lt);
+    border-radius: 10px;
+    padding: 0.9rem 0.75rem;
+    border: 1px solid rgba(14,158,130,0.15);
+    transition: border-color 0.2s;
+  }
+  .retainer-tier:hover { border-color: var(--teal); }
+  .rt-name {
+    font-size: 0.72rem; font-weight: 600;
+    color: var(--teal);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 0.35rem;
+  }
+  .rt-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--navy);
+    margin-bottom: 0.35rem;
+  }
+  .rt-desc {
+    font-size: 0.73rem;
+    color: var(--gray);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* ── CÓMO FUNCIONA ───────────────────────────────────────── */
+  #proceso { background: var(--white); }
+  .steps {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2rem; margin-top: 3rem;
+    position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 28px; left: calc(16.6% + 1rem); right: calc(16.6% + 1rem);
+    height: 1px;
+    background: linear-gradient(90deg, var(--teal), rgba(14,158,130,0.2), var(--teal));
+  }
+  .step { text-align: center; position: relative; }
+  .step-num {
+    width: 56px; height: 56px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.25rem;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--teal2);
+    position: relative; z-index: 1;
+    border: 3px solid var(--white);
+    box-shadow: 0 0 0 1px var(--teal);
+  }
+  .step-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+  .step-desc {
+    font-size: 0.875rem;
+    color: var(--gray);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ── SOBRE MÍ ────────────────────────────────────────────── */
+  #sobre-mi { background: var(--navy); }
+  .sobre-grid {
+    display: grid; grid-template-columns: 1fr 1.6fr; gap: 4rem; align-items: center;
+  }
+  .sobre-img-wrap {
+    position: relative;
+  }
+  .sobre-img-placeholder {
+    width: 100%; aspect-ratio: 1;
+    max-width: 320px;
+    background: rgba(14,158,130,0.1);
+    border: 2px solid rgba(14,158,130,0.3);
+    border-radius: 16px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.75rem;
+  }
+  .sobre-img-placeholder svg { opacity: 0.5; }
+  .sobre-img-placeholder span {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+  }
+  .sobre-tag { color: var(--teal2); }
+  #sobre-mi .section-title { color: var(--white); }
+  .sobre-body {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    font-weight: 300;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .sobre-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .chip {
+    background: rgba(14,158,130,0.15);
+    border: 1px solid rgba(14,158,130,0.3);
+    color: var(--teal2);
+    font-size: 0.78rem; font-weight: 500;
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+  }
+
+  /* ── CONTACTO ────────────────────────────────────────────── */
+  #contacto { background: var(--gray-lt); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start;
+  }
+  .contact-options { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+  .contact-option {
+    display: flex; align-items: center; gap: 1rem;
+    background: var(--white);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .contact-option:hover { border-color: var(--teal); transform: translateX(4px); }
+  .contact-icon {
+    width: 42px; height: 42px; min-width: 42px;
+    background: var(--teal-lt);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+  .contact-label { font-size: 0.72rem; color: var(--gray); font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; }
+  .contact-value { font-size: 0.92rem; color: var(--navy); font-weight: 500; }
+
+  /* form */
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-field label { font-size: 0.8rem; font-weight: 600; color: var(--navy); }
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    background: var(--white);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-field input:focus,
+  .form-field textarea:focus,
+  .form-field select:focus { border-color: var(--teal); }
+  .form-field textarea { resize: vertical; min-height: 120px; }
+  .form-submit {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--teal);
+    color: var(--white);
+    border: none; cursor: pointer;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
+    width: 100%;
+  }
+  .form-submit:hover { background: var(--teal2); transform: translateY(-1px); }
+
+  /* ── FOOTER ──────────────────────────────────────────────── */
+  footer {
+    background: var(--navy);
+    padding: 2rem 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(14,158,130,0.2);
+  }
+  .footer-logo {
+    font-family: 'DM Serif Display', serif;
+    color: var(--white); font-size: 1rem;
+    text-decoration: none;
+  }
+  .footer-logo span { color: var(--teal); }
+  .footer-copy {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* ── ANIMATIONS ──────────────────────────────────────────── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ──────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .hero-grid, .sobre-grid, .contact-grid { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .hero-stats .stat-card:first-child { grid-column: span 2; }
+    .services-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .steps::before { display: none; }
+    .retainer-tiers { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Ramón <span>Benavides</span></a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#proceso">Cómo funciona</a></li>
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#contacto" class="nav-cta">Contáctame</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Disponible para nuevos proyectos</div>
+      <h1>Tus datos tienen respuestas.<br><em>Yo te ayudo a encontrarlas.</em></h1>
+      <p class="hero-sub">
+        Ayudo a empresas a tomar mejores decisiones usando sus propios datos.
+        Dashboards, automatización de procesos y herramientas con inteligencia artificial
+        — adaptadas exactamente a lo que tu negocio necesita.
+      </p>
+      <div class="hero-actions">
+        <a href="#contacto" class="btn-primary">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          Hablemos por WhatsApp
+        </a>
+        <a href="#servicios" class="btn-secondary">Ver servicios →</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-num">+3 años</div>
+        <div class="stat-label">de experiencia en análisis de datos y herramientas de inteligencia artificial</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">MSc</div>
+        <div class="stat-label">Maestría en Analytics — Georgia Tech</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Soluciones a la medida de tu negocio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-inner">
+    <div class="services-header fade-up">
+      <span class="section-tag">Lo que ofrezco</span>
+      <h2 class="section-title">Servicios diseñados para tu negocio</h2>
+      <p class="section-sub">Cada proyecto es diferente. Por eso trabajo contigo para entender exactamente qué necesitas antes de proponer cualquier solución.</p>
+    </div>
+    <div class="services-grid">
+
+      <!-- 01 -->
+      <div class="service-card fade-up">
+        <div class="card-top">
+          <span class="card-num">01</span>
+          <span class="card-badge">Servicio de entrada</span>
+        </div>
+        <span class="card-price">Desde $200 · Entrega en 1 semana</span>
+        <h3 class="card-title">Diagnóstico de Datos</h3>
+        <p class="card-hook">"¿Tienes datos pero no sabes qué te están diciendo?"</p>
+        <p class="card-desc">Revisamos toda la información que ya tienes en tu negocio — ventas, clientes, operaciones — y te entregamos un informe claro con lo que está funcionando, lo que no, y los pasos concretos para mejorar. Sin tecnicismos. Solo respuestas útiles.</p>
+        <p class="card-delivers">Lo que recibes</p>
+        <ul class="card-items">
+          <li>Revisión completa de tus datos actuales</li>
+          <li>Informe en PDF con hallazgos y recomendaciones</li>
+          <li>Llamada de 30 minutos para explicar los resultados</li>
+        </ul>
+      </div>
+
+      <!-- 02 -->
+      <div class="service-card fade-up">
+        <div class="card-top">
+          <span class="card-num">02</span>
+          <span class="card-badge">Más solicitado</span>
+        </div>
+        <span class="card-price">Desde $400 · Entrega en 1 a 2 semanas</span>
+        <h3 class="card-title">Dashboard y Reportes a la Medida</h3>
+        <p class="card-hook">"¿Cansado de armar reportes en Excel cada semana?"</p>
+        <p class="card-desc">Construimos un panel visual y actualizado donde puedes ver el estado real de tu negocio en cualquier momento — ventas, inventario, clientes, lo que necesites. Accesible desde cualquier dispositivo, sin necesidad de instalar nada.</p>
+        <p class="card-delivers">Lo que recibes</p>
+        <ul class="card-items">
+          <li>Dashboard personalizado según tu negocio</li>
+          <li>Conexión a tus fuentes de datos existentes</li>
+          <li>Capacitación para que tú y tu equipo lo usen solos</li>
+        </ul>
+        <div class="retainer-block">
+          <p class="retainer-block-label">Planes de mantenimiento mensual</p>
+          <div class="retainer-tiers">
+            <div class="retainer-tier">
+              <p class="rt-name">Básico</p>
+              <p class="rt-price">$150<span style="font-size:0.7rem;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--gray)">/mes</span></p>
+              <p class="rt-desc">Actualizaciones técnicas y cambios básicos de diseño. Sin reuniones.</p>
+            </div>
+            <div class="retainer-tier">
+              <p class="rt-name">Mensual</p>
+              <p class="rt-price">$300<span style="font-size:0.7rem;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--gray)">/mes</span></p>
+              <p class="rt-desc">Todo lo anterior + reunión mensual de 60 min para revisar resultados.</p>
+            </div>
+            <div class="retainer-tier">
+              <p class="rt-name">Estratégico</p>
+              <p class="rt-price">$500<span style="font-size:0.7rem;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--gray)">/mes</span></p>
+              <p class="rt-desc">Reuniones quincenales, ajustes continuos y soporte por WhatsApp.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 -->
+      <div class="service-card fade-up">
+        <div class="card-top">
+          <span class="card-num">03</span>
+          <span class="card-badge">Alto impacto</span>
+        </div>
+        <span class="card-price">Desde $500 · Según el alcance</span>
+        <h3 class="card-title">Automatización de Procesos</h3>
+        <p class="card-hook">"¿Tu equipo pierde horas en tareas repetitivas que se podrían hacer solas?"</p>
+        <p class="card-desc">Identificamos los procesos manuales que más tiempo le consumen a tu negocio — reportes, actualizaciones, envíos, registros — y los automatizamos. Tu equipo deja de hacer lo repetitivo y se enfoca en lo que realmente importa.</p>
+        <p class="card-delivers">Lo que recibes</p>
+        <ul class="card-items">
+          <li>Análisis del proceso a automatizar</li>
+          <li>Sistema automatizado listo para usar</li>
+          <li>Capacitación y soporte post-entrega</li>
+        </ul>
+      </div>
+
+      <!-- 04 -->
+      <div class="service-card fade-up">
+        <div class="card-top">
+          <span class="card-num">04</span>
+          <span class="card-badge">Mayor impacto</span>
+        </div>
+        <span class="card-price">Desde $800 · Según el alcance</span>
+        <h3 class="card-title">Herramientas con Inteligencia Artificial</h3>
+        <p class="card-hook">"¿Y si tu negocio pudiera leer documentos, organizar información y generar reportes solo?"</p>
+        <p class="card-desc">Construimos herramientas personalizadas que usan inteligencia artificial para resolver problemas específicos de tu negocio — sistemas que leen facturas y contratos, extraen la información clave y generan reportes automáticamente sin intervención manual.</p>
+        <p class="card-delivers">Lo que recibes</p>
+        <ul class="card-items">
+          <li>Herramienta de IA diseñada para tu caso de uso</li>
+          <li>Integración con tus sistemas actuales</li>
+          <li>Capacitación y soporte post-entrega</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section id="proceso">
+  <div class="section-inner">
+    <div class="fade-up">
+      <span class="section-tag">El proceso</span>
+      <h2 class="section-title">Simple, claro y sin sorpresas</h2>
+      <p class="section-sub">Trabajo de forma directa y transparente. Sabes exactamente qué esperar en cada etapa.</p>
+    </div>
+    <div class="steps">
+      <div class="step fade-up">
+        <div class="step-num">1</div>
+        <h4 class="step-title">Hablamos</h4>
+        <p class="step-desc">Una llamada gratuita de 30 minutos para entender tu negocio, tus datos y lo que necesitas resolver. Sin compromisos.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">2</div>
+        <h4 class="step-title">Construimos</h4>
+        <p class="step-desc">Diseño y construyo la solución adaptada exactamente a tu caso. Te mantengo informado durante todo el proceso.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">3</div>
+        <h4 class="step-title">Entregamos</h4>
+        <p class="step-desc">Te entrego el resultado con capacitación incluida. Tú y tu equipo quedan listos para usarlo desde el primer día.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE MÍ -->
+<section id="sobre-mi">
+  <div class="section-inner">
+    <div class="sobre-grid">
+      <div class="sobre-img-wrap fade-up">
+        <img
+          src="data:image/jpeg;base64,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"
+          alt="Ramón Benavides"
+          style="width:100%;max-width:320px;aspect-ratio:1/1;object-fit:cover;border-radius:16px;border:3px solid rgba(14,158,130,0.35);display:block;"
+        />
+      </div>
+      <div class="fade-up">
+        <span class="section-tag sobre-tag">Sobre mí</span>
+        <h2 class="section-title" style="color:var(--white)">Hola, soy Ramón</h2>
+        <p class="sobre-body">
+          Soy analista de datos y consultor de inteligencia artificial con más de 3 años de experiencia
+          ayudando a empresas a convertir sus datos en decisiones. Tengo una Maestría en Analytics de
+          Georgia Tech y he trabajado con empresas del sector salud y tecnología en Estados Unidos.
+        </p>
+        <p class="sobre-body">
+          Soy venezolano, de Maracaibo, y entiendo perfectamente el contexto de los negocios en Venezuela.
+          Mi objetivo es traer herramientas de clase mundial y adaptarlas a las necesidades reales
+          de las empresas en nuestra región — sin tecnicismos, con resultados concretos.
+        </p>
+        <div class="sobre-chips">
+          <span class="chip">SQL & Python</span>
+          <span class="chip">Google Looker Studio</span>
+          <span class="chip">Inteligencia Artificial</span>
+          <span class="chip">Automatización</span>
+          <span class="chip">Análisis de negocios</span>
+          <span class="chip">Maracaibo, Venezuela</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="fade-up">
+        <span class="section-tag">Hablemos</span>
+        <h2 class="section-title">¿Listo para empezar?</h2>
+        <p class="section-sub">La primera llamada es gratis. Cuéntame qué necesita tu negocio y te digo cómo puedo ayudarte.</p>
+        <div class="contact-options">
+          <a href="https://wa.me/14073837255" target="_blank" class="contact-option">
+            <div class="contact-icon">💬</div>
+            <div>
+              <p class="contact-label">WhatsApp</p>
+              <p class="contact-value">+1 (407) 383-7255</p>
+            </div>
+          </a>
+          <a href="/cdn-cgi/l/email-protection#0775666a686965626966716e636274653e3f47606a666e6b2964686a" class="contact-option">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <p class="contact-label">Correo</p>
+              <p class="contact-value"><span class="__cf_email__" data-cfemail="2250434f4d4c40474c43544b464751401b1a62454f434b4e0c414d4f">[email&#160;protected]</span></p>
+            </div>
+          </a>
+          <a href="https://ramonbenavidesb98.github.io" target="_blank" class="contact-option">
+            <div class="contact-icon">🌐</div>
+            <div>
+              <p class="contact-label">Portafolio</p>
+              <p class="contact-value">ramonbenavidesb98.github.io</p>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="fade-up">
+        <form class="contact-form" action="https://formspree.io/f/xkoqqlwj" method="POST">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-field">
+              <label for="empresa">Empresa</label>
+              <input type="text" id="empresa" name="empresa" placeholder="Tu empresa">
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
+          </div>
+          <div class="form-field">
+            <label for="servicio">¿Qué servicio te interesa?</label>
+            <select id="servicio" name="servicio">
+              <option value="">Selecciona un servicio</option>
+              <option>Diagnóstico de Datos</option>
+              <option>Dashboard y Reportes a la Medida</option>
+              <option>Automatización de Procesos</option>
+              <option>Herramientas con Inteligencia Artificial</option>
+              <option>No estoy seguro aún</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="mensaje">Cuéntame sobre tu negocio</label>
+            <textarea id="mensaje" name="mensaje" placeholder="¿Qué problema quieres resolver? ¿Con qué datos trabajas actualmente?" required></textarea>
+          </div>
+          <button type="submit" class="form-submit">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+            Enviar mensaje
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Ramón <span>Benavides</span></a>
+  <p class="footer-copy">© 2026 · Maracaibo, Venezuela & San Francisco, CA</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.i
